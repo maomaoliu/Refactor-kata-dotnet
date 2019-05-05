@@ -21,12 +21,12 @@ namespace FizzBuzz
 
         private static bool MatchBuzzCondition(int index)
         {
-            return index % 5 == 0;
+            return index % 5 == 0 || index.ToString().Contains("5");
         }
 
         private static bool MatchFizzCondition(int index)
         {
-            return index % 3 == 0;
+            return index % 3 == 0 || index.ToString().Contains("3");
         }
     }
 }

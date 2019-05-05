@@ -6,7 +6,11 @@ namespace Kata
     {
         static void Main(string[] args)
         {
-            Console.WriteLine("Hello World!");
+            var fizzBuzz = new FizzBuzz.FizzBuzz();
+            for (int i = 0; i <= 100; i++)
+            {
+                Console.WriteLine(fizzBuzz.Of(i));
+            }
         }
     }
 }
