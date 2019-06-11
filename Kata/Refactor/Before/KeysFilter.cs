@@ -11,7 +11,7 @@ namespace Kata.Refactor.Before
         {
             var keys = new List<string>();
 
-            if (marks != null && marks.Count > 0)
+            if (marks == null || marks.Count == 0)
             {
                 return keys;
             }
