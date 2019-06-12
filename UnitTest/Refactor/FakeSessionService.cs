@@ -1,5 +1,5 @@
 using System.Collections.Generic;
-using Kata.Refactor.Before;
+using Kata.Refactor.After;
 
 namespace UnitTest.Refactor
 {

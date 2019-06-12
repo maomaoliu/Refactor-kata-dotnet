@@ -1,6 +1,6 @@
 using System.Collections.Generic;
 using System.Reflection;
-using Kata.Refactor.Before;
+using Kata.Refactor.After;
 using Xunit;
 
 namespace UnitTest.Refactor
