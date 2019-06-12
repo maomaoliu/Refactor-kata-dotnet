@@ -39,16 +39,17 @@ namespace Kata.Refactor.Before
         private IList<string> ValidateGoldenKeys(IList<string> marks)
         {
             var golden02Mark = marks.Where(x => x.StartsWith("GD02"));
-            
+            var invalidKeys = new List<string>();
+
             foreach (var mark in golden02Mark)
             {
                 if (!marks.Any(x => x.StartsWith("GD01") && mark.Substring(4, 6).Equals(x.Substring(4, 6))))
                 {
-                    marks.Remove(mark);
+                    invalidKeys.Add(mark);
                 }
             }
 
-            return marks;
+            return marks.Where(m => !invalidKeys.Contains(m)).ToList();
         }
 
         private bool IsFakeKey(string mark)
