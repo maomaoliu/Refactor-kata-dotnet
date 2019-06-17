@@ -6,10 +6,22 @@ namespace PokerGame
 {
     public class HandCardTypeCreator
     {
-        public IDictionary<CardNumber, int> GroupByNumber(List<Card> cards)
+        private readonly List<Card> _cards;
+
+        public HandCardTypeCreator(List<Card> cards)
+        {
+            _cards = cards;
+        }
+
+        public HandCardTypeCreator()
+        {
+            
+        }
+
+        public IDictionary<CardNumber, int> GroupByNumber()
         {
             var numberGroups = new Dictionary<CardNumber, int>();
-            cards.ForEach(card =>
+            _cards.ForEach(card =>
             {
                 var cardCardNumber = card.CardNumber;
                 if (numberGroups.ContainsKey(cardCardNumber))
@@ -20,14 +32,14 @@ namespace PokerGame
             return numberGroups;
         }
 
-        public bool IsSameSuite(List<Card> cards)
+        public bool IsSameSuite()
         {
-            return cards.Select(card => card.Suite).Distinct().Count() == 1;
+            return _cards.Select(card => card.Suite).Distinct().Count() == 1;
         }
 
-        public bool IsTouching(List<Card> cards)
+        public bool IsTouching()
         {
-            var orderedCardNumbers = cards.Select(card => card.CardNumber.Number).OrderBy(number => number).ToList();
+            var orderedCardNumbers = _cards.Select(card => card.CardNumber.Number).OrderBy(number => number).ToList();
             for (var i = 0; i < orderedCardNumbers.Count - 1; i++)
             {
                 if (orderedCardNumbers[i] + 1 != orderedCardNumbers[i + 1])
