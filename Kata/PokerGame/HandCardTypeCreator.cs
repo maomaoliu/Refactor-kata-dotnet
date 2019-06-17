@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.Linq;
 using PokerGame.Models;
 
 namespace PokerGame
@@ -17,6 +18,11 @@ namespace PokerGame
                     numberGroups.Add(cardCardNumber, 1);
             });
             return numberGroups;
+        }
+
+        public bool IsSameSuite(List<Card> cards)
+        {
+            return cards.Select(card => card.Suite).Distinct().Count() == 1;
         }
     }
 }
