@@ -24,5 +24,19 @@ namespace PokerGame
         {
             return cards.Select(card => card.Suite).Distinct().Count() == 1;
         }
+
+        public bool IsTouching(List<Card> cards)
+        {
+            var orderedCardNumbers = cards.Select(card => card.CardNumber.Number).OrderBy(number => number).ToList();
+            for (var i = 0; i < orderedCardNumbers.Count - 1; i++)
+            {
+                if (orderedCardNumbers[i] + 1 != orderedCardNumbers[i + 1])
+                {
+                    return false;
+                }
+            }
+
+            return true;
+        }
     }
 }
