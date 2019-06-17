@@ -9,15 +9,15 @@ namespace PokerGame
         [Fact]
         public void ShouldGetHighCard()
         {
-            var cardNumberGroups = new Dictionary<CardNumber, int>
+            var cards = new List<Card>
             {
-                {new CardNumber("3"), 1},
-                {new CardNumber("6"), 1},
-                {new CardNumber("A"), 1},
-                {new CardNumber("Q"), 1},
-                {new CardNumber("2"), 1}
+                new Card("3", "H"), 
+                new Card("6", "D"), 
+                new Card("A", "D"), 
+                new Card("Q", "C"),
+                new Card("2", "C")
             };
-            var handCardType = new HandCardTypeCreator().BuildType(cardNumberGroups, false, false);
+            var handCardType = new HandCardTypeCreator(cards).BuildType();
             Assert.Equal(HoldemType.HighCard, handCardType.HoldemType);
             Assert.Equal(new CardNumber("A"), handCardType.CardNumber);
         }
@@ -25,14 +25,15 @@ namespace PokerGame
         [Fact]
         public void ShouldGetPair()
         {
-            var cardNumberGroups = new Dictionary<CardNumber, int>
+            var cards = new List<Card>
             {
-                {new CardNumber("3"), 2},
-                {new CardNumber("6"), 1},
-                {new CardNumber("A"), 1},
-                {new CardNumber("2"), 1}
+                new Card("3", "H"), 
+                new Card("6", "D"), 
+                new Card("A", "D"), 
+                new Card("3", "C"),
+                new Card("2", "C")
             };
-            var handCardType = new HandCardTypeCreator().BuildType(cardNumberGroups, false, false);
+            var handCardType = new HandCardTypeCreator(cards).BuildType();
             Assert.Equal(HoldemType.Pair, handCardType.HoldemType);
             Assert.Equal(new CardNumber("3"), handCardType.CardNumber);
         }
@@ -40,13 +41,15 @@ namespace PokerGame
         [Fact]
         public void ShouldGetTwoPairs()
         {
-            var cardNumberGroups = new Dictionary<CardNumber, int>
+            var cards = new List<Card>
             {
-                {new CardNumber("3"), 2},
-                {new CardNumber("A"), 1},
-                {new CardNumber("4"), 2}
+                new Card("3", "H"), 
+                new Card("4", "D"), 
+                new Card("A", "D"), 
+                new Card("3", "C"),
+                new Card("4", "C")
             };
-            var handCardType = new HandCardTypeCreator().BuildType(cardNumberGroups, false, false);
+            var handCardType = new HandCardTypeCreator(cards).BuildType();
             Assert.Equal(HoldemType.TwoPairs, handCardType.HoldemType);
             Assert.Equal(new CardNumber("4"), handCardType.CardNumber);
         }
@@ -54,13 +57,15 @@ namespace PokerGame
         [Fact]
         public void ShouldGetThreeOfAKind()
         {
-            var cardNumberGroups = new Dictionary<CardNumber, int>
+            var cards = new List<Card>
             {
-                {new CardNumber("6"), 1},
-                {new CardNumber("A"), 1},
-                {new CardNumber("4"), 3}
+                new Card("6", "H"), 
+                new Card("4", "D"), 
+                new Card("A", "D"), 
+                new Card("4", "S"),
+                new Card("4", "C")
             };
-            var handCardType = new HandCardTypeCreator().BuildType(cardNumberGroups, false, false);
+            var handCardType = new HandCardTypeCreator(cards).BuildType();
             Assert.Equal(HoldemType.ThreeOfAKind, handCardType.HoldemType);
             Assert.Equal(new CardNumber("4"), handCardType.CardNumber);
         }
@@ -68,15 +73,15 @@ namespace PokerGame
         [Fact]
         public void ShouldGetStraight()
         {
-            var cardNumberGroups = new Dictionary<CardNumber, int>
+            var cards = new List<Card>
             {
-                {new CardNumber("T"), 1},
-                {new CardNumber("J"), 1},
-                {new CardNumber("A"), 1},
-                {new CardNumber("Q"), 1},
-                {new CardNumber("K"), 1}
+                new Card("T", "H"), 
+                new Card("J", "D"), 
+                new Card("A", "D"), 
+                new Card("Q", "S"),
+                new Card("K", "C")
             };
-            var handCardType = new HandCardTypeCreator().BuildType(cardNumberGroups, false, true);
+            var handCardType = new HandCardTypeCreator(cards).BuildType();
             Assert.Equal(HoldemType.Straight, handCardType.HoldemType);
             Assert.Equal(new CardNumber("A"), handCardType.CardNumber);
         }
@@ -84,15 +89,15 @@ namespace PokerGame
         [Fact]
         public void ShouldGetFlush()
         {
-            var cardNumberGroups = new Dictionary<CardNumber, int>
+            var cards = new List<Card>
             {
-                {new CardNumber("T"), 1},
-                {new CardNumber("J"), 1},
-                {new CardNumber("4"), 1},
-                {new CardNumber("Q"), 1},
-                {new CardNumber("K"), 1}
+                new Card("T", "D"), 
+                new Card("J", "D"), 
+                new Card("4", "D"), 
+                new Card("Q", "D"),
+                new Card("K", "D")
             };
-            var handCardType = new HandCardTypeCreator().BuildType(cardNumberGroups, true, false);
+            var handCardType = new HandCardTypeCreator(cards).BuildType();
             Assert.Equal(HoldemType.Flush, handCardType.HoldemType);
             Assert.Equal(new CardNumber("K"), handCardType.CardNumber);
         }
@@ -100,12 +105,15 @@ namespace PokerGame
         [Fact]
         public void ShouldGetFullHouse()
         {
-            var cardNumberGroups = new Dictionary<CardNumber, int>
+            var cards = new List<Card>
             {
-                {new CardNumber("T"), 3},
-                {new CardNumber("J"), 2}
+                new Card("T", "D"), 
+                new Card("J", "S"), 
+                new Card("T", "S"), 
+                new Card("T", "H"),
+                new Card("J", "D")
             };
-            var handCardType = new HandCardTypeCreator().BuildType(cardNumberGroups, true, false);
+            var handCardType = new HandCardTypeCreator(cards).BuildType();
             Assert.Equal(HoldemType.FullHouse, handCardType.HoldemType);
             Assert.Equal(new CardNumber("T"), handCardType.CardNumber);
         }
@@ -113,12 +121,15 @@ namespace PokerGame
         [Fact]
         public void ShouldGetFourOfAKind()
         {
-            var cardNumberGroups = new Dictionary<CardNumber, int>
+            var cards = new List<Card>
             {
-                {new CardNumber("T"), 1},
-                {new CardNumber("J"), 4}
+                new Card("T", "D"), 
+                new Card("J", "S"), 
+                new Card("J", "C"), 
+                new Card("J", "H"),
+                new Card("J", "D")
             };
-            var handCardType = new HandCardTypeCreator().BuildType(cardNumberGroups, true, false);
+            var handCardType = new HandCardTypeCreator(cards).BuildType();
             Assert.Equal(HoldemType.FourOfAKind, handCardType.HoldemType);
             Assert.Equal(new CardNumber("J"), handCardType.CardNumber);
         }
@@ -126,15 +137,15 @@ namespace PokerGame
         [Fact]
         public void ShouldGetStraightFlush()
         {
-            var cardNumberGroups = new Dictionary<CardNumber, int>
+            var cards = new List<Card>
             {
-                {new CardNumber("T"), 1},
-                {new CardNumber("J"), 1},
-                {new CardNumber("A"), 1},
-                {new CardNumber("Q"), 1},
-                {new CardNumber("K"), 1}
+                new Card("T", "H"), 
+                new Card("J", "H"), 
+                new Card("A", "H"), 
+                new Card("Q", "H"),
+                new Card("K", "H")
             };
-            var handCardType = new HandCardTypeCreator().BuildType(cardNumberGroups, true, true);
+            var handCardType = new HandCardTypeCreator(cards).BuildType();
             Assert.Equal(HoldemType.StraightFlush, handCardType.HoldemType);
             Assert.Equal(new CardNumber("A"), handCardType.CardNumber);
         }

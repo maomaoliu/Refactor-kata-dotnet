@@ -13,11 +13,6 @@ namespace PokerGame
             _cards = cards;
         }
 
-        public HandCardTypeCreator()
-        {
-            
-        }
-
         public IDictionary<CardNumber, int> GroupByNumber()
         {
             var numberGroups = new Dictionary<CardNumber, int>();
@@ -51,7 +46,12 @@ namespace PokerGame
             return true;
         }
 
-        public HandCardType BuildType(Dictionary<CardNumber,int> dictionary, bool isSameSuite, bool isTouching)
+        public HandCardType BuildType()
+        {
+            return BuildType(GroupByNumber(), IsSameSuite(), IsTouching());
+        }
+
+        private HandCardType BuildType(IDictionary<CardNumber,int> dictionary, bool isSameSuite, bool isTouching)
         {
             if (dictionary.Count == 5)
             {
