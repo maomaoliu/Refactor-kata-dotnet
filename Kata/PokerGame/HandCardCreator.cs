@@ -25,5 +25,10 @@ namespace PokerGame
         {
             return new HandCardTypeCreator(cards).BuildType();
         }
+
+        public HandCard BuildHandCard(string playerName, string handCardsString)
+        {
+            return new HandCard(ParsePlayer(playerName, handCardsString), GetHandCardType(ParseCards(playerName, handCardsString)));
+        }
     }
 }

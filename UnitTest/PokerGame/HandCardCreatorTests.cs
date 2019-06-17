@@ -27,5 +27,13 @@ namespace PokerGame
             var cards = new HandCardCreator().ParseCards("any", "2C 3H 4S 8C KH");
             Assert.Equal(HoldemType.HighCard, new HandCardCreator().GetHandCardType(cards).HoldemType);
         }
+
+        [Fact]
+        public void ShouldBuildHandCard()
+        {
+            var handCard = new HandCardCreator().BuildHandCard("White", "2C 3H 4S 8C KH");
+            Assert.Equal(new Player("White"), handCard.Player);
+            Assert.Equal(HoldemType.HighCard, handCard.HandCardType.HoldemType);
+        }
     }
 }
