@@ -5,7 +5,7 @@ namespace PokerGame.Models
 {
     public class CardNumber : IComparable
     {
-        private readonly Dictionary<string, int> _dictionary = new Dictionary<string, int>
+        private readonly Dictionary<string, int> _numberMap = new Dictionary<string, int>
         {
             {"2", 2},
             {"3", 3},
@@ -22,14 +22,34 @@ namespace PokerGame.Models
             {"A", 14}
         };
         
+        private readonly Dictionary<string, string> _displayNameMap = new Dictionary<string, string>
+        {
+            {"2", "2"},
+            {"3", "3"},
+            {"4", "4"},
+            {"5", "5"},
+            {"6", "6"},
+            {"7", "7"},
+            {"8", "8"},
+            {"9", "9"},
+            {"T", "10"},
+            {"J", "Jack"},
+            {"Q", "Queen"},
+            {"K", "King"},
+            {"A", "Ace"}
+        };
+        
         public string NumberString { get; }
         
         public int Number { get; }
 
+        public string DisplayName { get; }
+
         public CardNumber(string numberString)
         {
             NumberString = numberString;
-            Number = _dictionary[numberString];
+            Number = _numberMap[numberString];
+            DisplayName = _displayNameMap[numberString];
         }
 
         protected bool Equals(CardNumber other)

@@ -1,4 +1,4 @@
-namespace PokerGame
+namespace PokerGame.Models
 {
     public class Player
     {
