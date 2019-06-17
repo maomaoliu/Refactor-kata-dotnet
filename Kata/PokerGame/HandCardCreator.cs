@@ -20,5 +20,10 @@ namespace PokerGame
             var cardsStrings = handCardString.Split(HandCardSeparator);
             return cardsStrings.Select(cardString => new Card(cardString[CardNumberIndex].ToString(), cardString[SuiteIndex].ToString())).ToList();
         }
+
+        public HandCardType GetHandCardType(IList<Card> cards)
+        {
+            return new HandCardTypeCreator(cards).BuildType();
+        }
     }
 }

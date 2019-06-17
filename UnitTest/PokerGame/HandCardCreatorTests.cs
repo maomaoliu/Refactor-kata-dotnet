@@ -20,5 +20,12 @@ namespace PokerGame
             Assert.Equal("C", cards.First().Suite);
             Assert.Equal(new CardNumber("2"), cards.First().CardNumber);
         }
+
+        [Fact]
+        public void ShouldGetHandCardType()
+        {
+            var cards = new HandCardCreator().ParseCards("any", "2C 3H 4S 8C KH");
+            Assert.Equal(HoldemType.HighCard, new HandCardCreator().GetHandCardType(cards).HoldemType);
+        }
     }
 }

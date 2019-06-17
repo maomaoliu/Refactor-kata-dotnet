@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.Collections.Immutable;
 using System.Linq;
 using PokerGame.Models;
 
@@ -6,9 +7,9 @@ namespace PokerGame
 {
     public class HandCardTypeCreator
     {
-        private readonly List<Card> _cards;
+        private readonly IList<Card> _cards;
 
-        public HandCardTypeCreator(List<Card> cards)
+        public HandCardTypeCreator(IList<Card> cards)
         {
             _cards = cards;
         }
@@ -16,7 +17,7 @@ namespace PokerGame
         public IDictionary<CardNumber, int> GroupByNumber()
         {
             var numberGroups = new Dictionary<CardNumber, int>();
-            _cards.ForEach(card =>
+            _cards.ToImmutableList().ForEach(card =>
             {
                 var cardCardNumber = card.CardNumber;
                 if (numberGroups.ContainsKey(cardCardNumber))
