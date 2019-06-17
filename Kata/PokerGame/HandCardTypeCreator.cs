@@ -38,5 +38,66 @@ namespace PokerGame
 
             return true;
         }
+
+        public HandCardType BuildType(Dictionary<CardNumber,int> dictionary, bool isSameSuite, bool isTouching)
+        {
+            if (dictionary.Count == 5)
+            {
+                var maxNumber = dictionary.Keys.Max(cardNumber => cardNumber);
+                
+                if (!isSameSuite && !isTouching)
+                {
+                    return new HandCardType(HoldemType.HighCard, maxNumber);
+                }
+
+                if (!isSameSuite)
+                {
+                    return new HandCardType(HoldemType.Straight, maxNumber);
+                }
+
+                if (!isTouching)
+                {
+                    return new HandCardType(HoldemType.Flush, maxNumber);
+                }
+                
+                return new HandCardType(HoldemType.StraightFlush, maxNumber);
+            }
+
+            if (dictionary.Count == 4)
+            {
+                return new HandCardType(HoldemType.Pair, dictionary.First(pair => pair.Value == 2).Key);
+            }
+
+            if (dictionary.Count == 3)
+            {
+                var maxCount = dictionary.Values.Max();
+                if (maxCount == 2)
+                {
+                    return new HandCardType(HoldemType.TwoPairs, dictionary.Where(pair => pair.Value == maxCount).Max(pair => pair.Key));
+                } 
+                
+                if (maxCount == 3)
+                {
+                    return new HandCardType(HoldemType.ThreeOfAKind, dictionary.First(pair => pair.Value == maxCount).Key);
+                }
+            }
+
+            if (dictionary.Count == 2)
+            {
+                var maxCount = dictionary.Values.Max();
+
+                if (maxCount == 3)
+                {
+                    return new HandCardType(HoldemType.FullHouse, dictionary.First(pair => pair.Value == 3).Key);
+                }
+
+                if (maxCount == 4)
+                {
+                    return new HandCardType(HoldemType.FourOfAKind, dictionary.First(pair => pair.Value == 4).Key);
+                }
+            }
+            
+            return null;
+        }
     }
 }

@@ -4,7 +4,7 @@ using Xunit;
 
 namespace PokerGame
 {
-    public class HandCardTypeCreatorTests
+    public partial class HandCardTypeCreatorTests
     {
         [Fact]
         public void ShouldGroupByNumber()

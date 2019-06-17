@@ -1,8 +1,9 @@
+using System;
 using System.Collections.Generic;
 
 namespace PokerGame.Models
 {
-    public class CardNumber
+    public class CardNumber : IComparable
     {
         private readonly Dictionary<string, int> _dictionary = new Dictionary<string, int>
         {
@@ -47,6 +48,12 @@ namespace PokerGame.Models
         public override int GetHashCode()
         {
             return (NumberString != null ? NumberString.GetHashCode() : 0);
+        }
+
+        public int CompareTo(object obj)
+        {
+            if (obj == null) return 1;
+            return Number.CompareTo(((CardNumber) obj).Number);
         }
 
         public static bool operator ==(CardNumber left, CardNumber right)
