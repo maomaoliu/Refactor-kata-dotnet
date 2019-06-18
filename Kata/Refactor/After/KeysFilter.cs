@@ -21,9 +21,9 @@ namespace Kata.Refactor.After
 
             var keys = GetMarksBySessionKey(new List<string> { "GoldenKey" });
 
-            marks = ValidateGoldenKeys(marks);
+            var filteredMarks = marks.Where(mark => keys.Contains(mark) || IsFakeKey(mark)).ToList();
 
-            return marks.Where(mark => keys.Contains(mark) || IsFakeKey(mark)).ToList();
+            return ValidateGoldenKeys(filteredMarks);
         }
 
         public IList<string> FilterSilverAndCopperKeys(IList<string> marks)
@@ -46,6 +46,12 @@ namespace Kata.Refactor.After
 
         private IList<string> ValidateGoldenKeys(IList<string> marks)
         {
+            var invalidKeys = GetInvalidGolderMarks(marks);
+            return marks.Where(m => !invalidKeys.Contains(m)).ToList();
+        }
+
+        private static List<string> GetInvalidGolderMarks(IList<string> marks)
+        {
             var golden02Mark = marks.Where(x => x.StartsWith("GD02"));
             var invalidKeys = new List<string>();
 
@@ -57,7 +63,7 @@ namespace Kata.Refactor.After
                 }
             }
 
-            return marks.Where(m => !invalidKeys.Contains(m)).ToList();
+            return invalidKeys;
         }
 
         private bool IsFakeKey(string mark)

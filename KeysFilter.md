@@ -11,6 +11,7 @@
 2. 去除形如 `IList<string> marks1 = marks` 的代码
 3. 消除看似非常重复的代码： 两个方法中keys的构建
 4. 简化方法`GetMarksBySessionKey`，使用linq表达式描述。
+5. 看看能够对`FilterGoldenKeys`做一点变形。
 
 ### 第1步
 1. 新建两个明确函数 `FilterGoldenKeys(IList<string> marks)` 和 `FilterSilverAndCopperKeys(IList<string> marks)`
@@ -38,3 +39,12 @@
 
 ### 第4步
 1. 将`GetMarksBySessionKey`改为链式Select函数
+
+### 第5步
+1. 在方法`ValidateGoldenKeys(IList<string> marks)`中提子字方法`GetInvalidGolderMarks(IList<string> marks)`
+2. 内联方法`ValidateGoldenKeys`
+3. 合并`where`子句
+4. 调换`where`子句的顺序
+5. 将与方法`FilterSilverAndCopperKeys`中相似的`where`子句提取为变量
+6. 调换语句的执行顺序，这里注意调换的前提是不改变原始行为。
+7. 重新调用`ValidateGoldenKeys`。
