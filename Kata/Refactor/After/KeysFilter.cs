@@ -14,10 +14,9 @@ namespace Kata.Refactor.After
 
         public IList<string> FilterGoldenKeys(IList<string> marks)
         {
-            IList<string> marks1 = marks;
             var keys = new List<string>();
 
-            if (marks1 == null || marks1.Count == 0)
+            if (marks == null || marks.Count == 0)
             {
                 return keys;
             }
@@ -26,17 +25,16 @@ namespace Kata.Refactor.After
 
             keys.AddRange(goldenKey);
 
-            marks1 = ValidateGoldenKeys(marks1);
+            marks = ValidateGoldenKeys(marks);
 
-            return marks1.Where(mark => keys.Contains(mark) || IsFakeKey(mark)).ToList();
+            return marks.Where(mark => keys.Contains(mark) || IsFakeKey(mark)).ToList();
         }
         
         public IList<string> FilterSilverAndCopperKeys(IList<string> marks)
         {
-            IList<string> marks1 = marks;
             var keys = new List<string>();
 
-            if (marks1 == null || marks1.Count == 0)
+            if (marks == null || marks.Count == 0)
             {
                 return keys;
             }
@@ -47,7 +45,7 @@ namespace Kata.Refactor.After
             keys.AddRange(SilverKeys);
             keys.AddRange(CopperKeys);
 
-            return marks1.Where(mark => keys.Contains(mark) || IsFakeKey(mark)).ToList();
+            return marks.Where(mark => keys.Contains(mark) || IsFakeKey(mark)).ToList();
         }
         
         private IList<string> ValidateGoldenKeys(IList<string> marks)
