@@ -40,14 +40,8 @@ namespace Kata.Refactor.After
 
         private List<string> GetMarksBySessionKey(List<string> sessionKeys)
         {
-            var keys = new List<string>();
-            foreach (var sessionKey in sessionKeys)
-            {
-                var value = SessionService.Get<List<string>>(sessionKey);
-                keys.AddRange(value);
-            }
-
-            return keys;
+            return sessionKeys.Select(sessionKey => SessionService.Get<List<string>>(sessionKey))
+                .SelectMany(k => k) .ToList();
         }
 
         private IList<string> ValidateGoldenKeys(IList<string> marks)

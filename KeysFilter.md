@@ -10,6 +10,7 @@
 1. 移除标记参数 Remove Flag Argument / 已明确函数取代参数 Replace Parameter with Explicit Methods
 2. 去除形如 `IList<string> marks1 = marks` 的代码
 3. 消除看似非常重复的代码： 两个方法中keys的构建
+4. 简化方法`GetMarksBySessionKey`，使用linq表达式描述。
 
 ### 第1步
 1. 新建两个明确函数 `FilterGoldenKeys(IList<string> marks)` 和 `FilterSilverAndCopperKeys(IList<string> marks)`
@@ -34,3 +35,6 @@
 6. 内联`GetMarksBySessionKey(string sessionKey)`方法
 7. 删除`GetMarksBySessionKey(string sessionKey)`方法
 8. 内联变量`sessionKey`或`sessionKeys`
+
+### 第4步
+1. 将`GetMarksBySessionKey`改为链式Select函数
