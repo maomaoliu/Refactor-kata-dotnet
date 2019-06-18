@@ -1,6 +1,6 @@
 using System.Collections.Generic;
 
-namespace Kata.Refactor.After
+namespace Refactor.After
 {
     public interface ISessionService
     {

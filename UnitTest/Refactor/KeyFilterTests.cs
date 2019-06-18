@@ -1,9 +1,9 @@
 using System.Collections.Generic;
 using System.Reflection;
-using Kata.Refactor.After;
+using Refactor.After;
 using Xunit;
 
-namespace UnitTest.Refactor
+namespace Refactor
 {
     public class KeyFilterTests
     {

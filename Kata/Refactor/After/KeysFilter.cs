@@ -1,7 +1,7 @@
 using System.Collections.Generic;
 using System.Linq;
 
-namespace Kata.Refactor.After
+namespace Refactor.After
 {
     public class KeysFilter
     {
