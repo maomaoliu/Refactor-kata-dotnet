@@ -25,14 +25,22 @@ namespace Kata.Refactor.After
 
         private List<string> FilterMarkBasedOnSessionKey(IList<string> marks, List<string> sessionKeys)
         {
-            if (marks == null || marks.Count == 0)
+            if (IsEmpty(marks))
             {
-                marks = new List<string>();
+                return new List<string>();
             }
 
-            var keys = GetMarksBySessionKey(sessionKeys);
+            return FilterValidMarks(marks, GetMarksBySessionKey(sessionKeys));
+        }
 
-            return marks.Where(mark => keys.Contains(mark) || IsFakeKey(mark)).ToList();
+        private List<string> FilterValidMarks(IList<string> marks, List<string> validMarks)
+        {
+            return marks.Where(mark => validMarks.Contains(mark) || IsFakeKey(mark)).ToList();
+        }
+
+        private static bool IsEmpty(IList<string> marks)
+        {
+            return marks == null || marks.Count == 0;
         }
 
         private List<string> GetMarksBySessionKey(List<string> sessionKeys)

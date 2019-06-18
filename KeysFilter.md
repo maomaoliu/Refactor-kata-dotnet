@@ -13,6 +13,7 @@
 4. 简化方法`GetMarksBySessionKey`，使用linq表达式描述。
 5. 看看能够对`FilterGoldenKeys`做一点变形。
 6. 消除 `FilterGoldenKeys(IList<string> marks)` 和 `FilterSilverAndCopperKeys(IList<string> marks)`中的相似部分
+7. 使`FilterMarkBasedOnSessionKey`更表意
 
 ### 第1步
 1. 新建两个明确函数 `FilterGoldenKeys(IList<string> marks)` 和 `FilterSilverAndCopperKeys(IList<string> marks)`
@@ -57,3 +58,10 @@
 3. 抽取新方法`FilterMarkBasedOnSessionKey(IList<string> marks, List<string> sessionKeys)`   
 4. 将重复代码用新方法的调用替换。
 5. 分别对两个方法进行更改签名操作，内联参数`sessionKeys`，使方法签名变为原来的签名
+
+### 第7步
+1. 抽取方法`IsEmpty`
+2. 做等价变换，若参数为空数组，提前返回空数组。（该回去喽）
+3. 抽取方法`FilterValidMarks`
+4. 内联变量`keys`
+5. 重命名方法`FilterValidMarks(IList<string> marks, List<string> keys)`的第二个参数 `keys`为`validMarks`
