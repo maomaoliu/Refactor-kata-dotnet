@@ -7,35 +7,49 @@ namespace Kata.Refactor.After
     {
         private ISessionService SessionService { get; set; }
         
-        public List<string> Filter(IList<string> marks, bool isGoldenKey)
+        public IList<string> Filter(IList<string> marks, bool isGoldenKey)
         {
+            return isGoldenKey ? FilterGoldenKeys(marks) : FilterSilverAndCopperKeys(marks);
+        }
+
+        public IList<string> FilterGoldenKeys(IList<string> marks)
+        {
+            IList<string> marks1 = marks;
             var keys = new List<string>();
 
-            if (marks == null || marks.Count == 0)
+            if (marks1 == null || marks1.Count == 0)
             {
                 return keys;
             }
 
-            if (isGoldenKey)
-            {
-                var goldenKey = SessionService.Get<List<string>>("GoldenKey");
-                
-                keys.AddRange(goldenKey);
+            var goldenKey = SessionService.Get<List<string>>("GoldenKey");
 
-                marks = ValidateGoldenKeys(marks);
-            }
-            else
-            {
-                var SilverKeys = SessionService.Get<List<string>>("SilverKey");
-                var CopperKeys = SessionService.Get<List<string>>("CopperKey");
-                
-                keys.AddRange(SilverKeys);
-                keys.AddRange(CopperKeys);
-            }
-            
-            return marks.Where(mark => keys.Contains(mark) || IsFakeKey(mark)).ToList();
+            keys.AddRange(goldenKey);
+
+            marks1 = ValidateGoldenKeys(marks1);
+
+            return marks1.Where(mark => keys.Contains(mark) || IsFakeKey(mark)).ToList();
         }
+        
+        public IList<string> FilterSilverAndCopperKeys(IList<string> marks)
+        {
+            IList<string> marks1 = marks;
+            var keys = new List<string>();
 
+            if (marks1 == null || marks1.Count == 0)
+            {
+                return keys;
+            }
+
+            var SilverKeys = SessionService.Get<List<string>>("SilverKey");
+            var CopperKeys = SessionService.Get<List<string>>("CopperKey");
+
+            keys.AddRange(SilverKeys);
+            keys.AddRange(CopperKeys);
+
+            return marks1.Where(mark => keys.Contains(mark) || IsFakeKey(mark)).ToList();
+        }
+        
         private IList<string> ValidateGoldenKeys(IList<string> marks)
         {
             var golden02Mark = marks.Where(x => x.StartsWith("GD02"));
