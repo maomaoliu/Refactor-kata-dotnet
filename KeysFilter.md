@@ -14,6 +14,7 @@
 5. 看看能够对`FilterGoldenKeys`做一点变形。
 6. 消除 `FilterGoldenKeys(IList<string> marks)` 和 `FilterSilverAndCopperKeys(IList<string> marks)`中的相似部分
 7. 使`FilterMarkBasedOnSessionKey`更表意
+8. 是`ValidateGoldenKeys`更表意
 
 ### 第1步
 1. 新建两个明确函数 `FilterGoldenKeys(IList<string> marks)` 和 `FilterSilverAndCopperKeys(IList<string> marks)`
@@ -65,3 +66,14 @@
 3. 抽取方法`FilterValidMarks`
 4. 内联变量`keys`
 5. 重命名方法`FilterValidMarks(IList<string> marks, List<string> keys)`的第二个参数 `keys`为`validMarks`
+
+### 第8步
+1. 修改方法名 `ValidateGoldenKeys` 为 `FilterInvalidGoldenMarks`
+2. 按照语义抽取方法`IsGolden01Mark`, `IsGolden02Mark`, `ParseCustomerFromMark`
+3. 按照语义抽取方法`IsSameCustomer`
+4. 按照语义抽取方法`IsGolden01MarkForSameCustomer`
+5. 内联方法`GetInvalidGolderMarks`
+6. 做等价变换，将`invalidKeys`的值变为一条LINQ语句，随后将该语句中的两个`Where`子句变为一个`where`子句
+7. 做等价变化，将`marks.Where(m => !invalidKeys.Contains(m)).ToList()`变换为"Not invalidKeys"。
+    即，`return validKeys`
+    如果`invalidKeys = marks.where(x => expression)`那么，`validKeys = marks.where(x => !expression)`.

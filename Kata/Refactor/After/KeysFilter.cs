@@ -15,7 +15,7 @@ namespace Kata.Refactor.After
         public IList<string> FilterGoldenKeys(IList<string> marks)
         {
             var filteredMarks = FilterMarkBasedOnSessionKey(marks, new List<string> { "GoldenKey" });
-            return ValidateGoldenKeys(filteredMarks);
+            return FilterInvalidGoldenMarks(filteredMarks);
         }
 
         public IList<string> FilterSilverAndCopperKeys(IList<string> marks)
@@ -49,26 +49,34 @@ namespace Kata.Refactor.After
                 .SelectMany(k => k) .ToList();
         }
 
-        private IList<string> ValidateGoldenKeys(IList<string> marks)
+        private IList<string> FilterInvalidGoldenMarks(IList<string> marks)
         {
-            var invalidKeys = GetInvalidGolderMarks(marks);
-            return marks.Where(m => !invalidKeys.Contains(m)).ToList();
+            return marks.Where(mark => !IsGolden02Mark(mark) || marks.Any(x => IsGolden01MarkForSameCustomer(x, mark))).ToList();
         }
 
-        private static List<string> GetInvalidGolderMarks(IList<string> marks)
+        private static bool IsGolden01MarkForSameCustomer(string mark, string anotherMark)
         {
-            var golden02Mark = marks.Where(x => x.StartsWith("GD02"));
-            var invalidKeys = new List<string>();
+            return IsGolden01Mark(mark) && IsSameCustomer(anotherMark, mark);
+        }
 
-            foreach (var mark in golden02Mark)
-            {
-                if (!marks.Any(x => x.StartsWith("GD01") && mark.Substring(4, 6).Equals(x.Substring(4, 6))))
-                {
-                    invalidKeys.Add(mark);
-                }
-            }
+        private static bool IsSameCustomer(string mark, string anotherMark)
+        {
+            return ParseCustomerFromMark(mark).Equals(ParseCustomerFromMark(anotherMark));
+        }
 
-            return invalidKeys;
+        private static string ParseCustomerFromMark(string mark)
+        {
+            return mark.Substring(4, 6);
+        }
+
+        private static bool IsGolden01Mark(string x)
+        {
+            return x.StartsWith("GD01");
+        }
+
+        private static bool IsGolden02Mark(string x)
+        {
+            return x.StartsWith("GD02");
         }
 
         private bool IsFakeKey(string mark)
