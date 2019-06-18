@@ -14,26 +14,23 @@ namespace Kata.Refactor.After
 
         public IList<string> FilterGoldenKeys(IList<string> marks)
         {
-            if (marks == null || marks.Count == 0)
-            {
-                return new List<string>();
-            }
-
-            var keys = GetMarksBySessionKey(new List<string> { "GoldenKey" });
-
-            var filteredMarks = marks.Where(mark => keys.Contains(mark) || IsFakeKey(mark)).ToList();
-
+            var filteredMarks = FilterMarkBasedOnSessionKey(marks, new List<string> { "GoldenKey" });
             return ValidateGoldenKeys(filteredMarks);
         }
 
         public IList<string> FilterSilverAndCopperKeys(IList<string> marks)
         {
+            return FilterMarkBasedOnSessionKey(marks, new List<string> { "SilverKey", "CopperKey" });
+        }
+
+        private List<string> FilterMarkBasedOnSessionKey(IList<string> marks, List<string> sessionKeys)
+        {
             if (marks == null || marks.Count == 0)
             {
-                return new List<string>();
+                marks = new List<string>();
             }
 
-            var keys = GetMarksBySessionKey(new List<string> { "SilverKey", "CopperKey" });
+            var keys = GetMarksBySessionKey(sessionKeys);
 
             return marks.Where(mark => keys.Contains(mark) || IsFakeKey(mark)).ToList();
         }
